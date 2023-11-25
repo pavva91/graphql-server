@@ -12,7 +12,7 @@ type Review {
 type Author {
   id: ID!
   name: String!
-  verified: boolean!
+  verified: Boolean!
 }
 type Query {
   reviews: [Review]
