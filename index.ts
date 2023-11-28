@@ -5,7 +5,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 //db
 import db from "./_db.ts";
 
-// types
+// type definitions (Schema)
 import { typeDefs } from "./schema.ts";
 
 // resolver functions
@@ -56,7 +56,13 @@ const resolvers = {
     game(parent) {
       return db.authors.find((g) => g.id === parent.game_id)
     }
-  }
+  },
+  Mutation: {
+    deleteGame(_, args) {
+      db.games = db.games.filter((g) => g.id !== args.id)
+      return db.games
+    }
+}
 };
 
 // server setup
