@@ -58,6 +58,14 @@ const resolvers = {
     }
   },
   Mutation: {
+    addGame(_, args) {
+      let game = {
+        ...args.game,
+        id: Math.floor(Math.random() * 10000).toString()
+      }
+      db.games.push(game)
+      return game
+    },
     deleteGame(_, args) {
       db.games = db.games.filter((g) => g.id !== args.id)
       return db.games
