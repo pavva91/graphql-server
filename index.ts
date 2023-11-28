@@ -8,7 +8,7 @@ import db from "./_db.ts";
 // types
 import { typeDefs } from "./schema.ts";
 
-// resolvers
+// resolver functions
 const resolvers = {
   Query: {
     games: () => {
@@ -24,21 +24,39 @@ const resolvers = {
       // return db.games.find((game) => {
       //   game.id == args.id;
       // });
-      return db.games[args.id - 1]
+      return db.games[args.id - 1];
     },
     review(_, args) {
       // return db.reviews.find((review) => {
       //   review.id === args.id;
       // });
-      return db.reviews[args.id - 1]
+      return db.reviews[args.id - 1];
     },
     author(_, args) {
       // return db.authors.find((author) => {
       //   author.id === args.id;
       // });
-      return db.authors[args.id - 1]
+      return db.authors[args.id - 1];
     },
   },
+  Game: {
+    reviews: (parent) => {
+      return db.reviews.filter((r) => r.game_id === parent.id)
+    },
+  },
+  Author: {
+    reviews: (parent) => {
+      return db.reviews.filter((r) => r.author_id === parent.id)
+    }
+  },
+  Review: {
+    author(parent) {
+      return db.authors.find((a) => a.id === parent.author_id)
+    },
+    game(parent) {
+      return db.authors.find((g) => g.id === parent.game_id)
+    }
+  }
 };
 
 // server setup
